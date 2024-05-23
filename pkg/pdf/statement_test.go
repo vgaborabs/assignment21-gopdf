@@ -1,8 +1,8 @@
 package pdf
 
 import (
-	"assignment21-gopdf/types"
 	"errors"
+	"github.com/vgaborabs/assignment21-gopdf/types"
 	"io/fs"
 	"os"
 	"testing"
@@ -132,18 +132,21 @@ func TestGetStatement(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	_, err = GenerateStatement(statement, f)
+	b, err := GenerateStatement(statement)
 	if err != nil {
 		t.Error("could not get statement pdf", err)
 	}
-
+	_, err = f.Write(b)
+	if err != nil {
+		t.Error("could not get write pdf to file", err)
+	}
 	err = f.Close()
 	if err != nil {
 		t.Error(err)
 	}
-	//
-	//err = os.Remove(fileName)
-	//if err != nil {
-	//	t.Error("failed to delete file", err)
-	//}
+
+	err = os.Remove(fileName)
+	if err != nil {
+		t.Error("failed to delete file", err)
+	}
 }

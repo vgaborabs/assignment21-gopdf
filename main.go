@@ -1,7 +1,7 @@
 package main
 
 import (
-	"assignment21-gopdf/handler"
+	"github.com/vgaborabs/assignment21-gopdf/handler"
 	"log"
 	"net/http"
 )

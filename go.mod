@@ -1,4 +1,4 @@
-module assignment21-gopdf
+module github.com/vgaborabs/assignment21-gopdf
 
 go 1.22
 

@@ -1,8 +1,6 @@
 package pdf
 
 import (
-	"assignment21-gopdf/types"
-	"bytes"
 	"fmt"
 	"github.com/johnfercher/maroto/v2"
 	"github.com/johnfercher/maroto/v2/pkg/components/code"
@@ -17,13 +15,13 @@ import (
 	"github.com/johnfercher/maroto/v2/pkg/consts/pagesize"
 	"github.com/johnfercher/maroto/v2/pkg/core"
 	"github.com/johnfercher/maroto/v2/pkg/props"
-	"io"
+	"github.com/vgaborabs/assignment21-gopdf/types"
 	"strings"
 	"time"
 )
 
-// GenerateStatement creates the PDF for the provided statement and writes it to the io.Writer if supplied. A bytes.Reader is returned to be used for possible content serving.
-func GenerateStatement(statement types.Statement, writer io.Writer) (*bytes.Reader, error) {
+// GenerateStatement creates the PDF for the provided statement. Returns the PDF contents as an array of bytes, or the error occurring during generation.
+func GenerateStatement(statement types.Statement) ([]byte, error) {
 	cfg := config.NewBuilder().
 		WithPageSize(pagesize.A4).
 		WithMargins(10, 15, 10).
@@ -54,11 +52,7 @@ func GenerateStatement(statement types.Statement, writer io.Writer) (*bytes.Read
 	if err != nil {
 		return nil, err
 	}
-	b := document.GetBytes()
-	if writer != nil {
-		_, err = writer.Write(b)
-	}
-	return bytes.NewReader(b), err
+	return document.GetBytes(), nil
 }
 
 func getAccountInfo(statement types.Statement) core.Row {
