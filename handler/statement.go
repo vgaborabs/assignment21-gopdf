@@ -37,6 +37,28 @@ func HandleStatementPdf(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	pf, err := os.Open("public")
+	if os.IsNotExist(err) {
+		slog.Info("Public folder not exists, creating... ")
+
+		err = os.Mkdir("public", 0755)
+		if err != nil {
+			slog.Error("Error creating public folder: ", "err", err)
+			w.WriteHeader(http.StatusInternalServerError)
+			return
+		}
+		pf, _ = os.Open("public")
+	} else if err != nil {
+		slog.Error("Error opening public folder: ", "err", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	if err = pf.Close(); err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
 	fileName := fmt.Sprintf("public/%s", getFileName(statement))
 
 	file, err := os.Create(fileName)
