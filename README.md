@@ -10,6 +10,7 @@ Go 1.22
 ### Endpoints
 - /statement/pdf - POST - Generate and serve
 - /statement/pdf/stream - POST - Generate and stream as response
+- /public/* - GET - Serving the generated PDFs
 
 ### Test data
 ```json
